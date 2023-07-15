@@ -33,11 +33,15 @@ export class BlogController {
         return "success";
     }
 
+    // 서비스에서 비동기처리로 수정했기 때문에 비동기 처리해주어야 함
     @Get('/:id')    // GET 에 URL 매개변수 id 가 있는 요청 처리
-    getPost(@Param('id') id: string) {
+    async getPost(@Param('id') id: string) {
         console.log(`[id: ${id}] 게시글 하나 가져오기`);
 
-        return this.blogService.getPost(id);
+        const post = await this.blogService.getPost(id);
+        console.log(post);
+
+        return post
 
     }
 

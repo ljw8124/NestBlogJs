@@ -16,8 +16,8 @@ export class BlogFileRepository implements BlogRepository {
 
     // 파일을 읽어서 모든 게시글 불러오기
     async getAllPost(): Promise<PostDto[]> {
-        const datas = await readFile(this.FILE_NAME, 'utf-8');
-        const posts = JSON.parse(datas);
+        const data = await readFile(this.FILE_NAME, 'utf-8');
+        const posts = JSON.parse(data);
 
         return posts;
     }
