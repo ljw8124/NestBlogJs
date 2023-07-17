@@ -9,11 +9,11 @@ import {BlogService} from "./blog.service";
 @Controller('blog')
 export class BlogController {
 
-    blogService: BlogService;
-
-    constructor() {
-        // NestJS 에서는 의존성 주입을 이용하지만 아직은 생성자를 이용하여 생성
-        this.blogService = new BlogService();
+    // blogService: BlogService;
+    // 생성자에서 주입받은 BlogFileRepository 타입의 값을 할당
+    constructor(private blogService: BlogService) {
+        // NestJS 에서는 의존성 주입을 이용하지만 아직은 생성자를 이용하여 생성 -> 의존성 주입으로 주석처리
+        // this.blogService = new BlogService();
     }
 
     @Get()
