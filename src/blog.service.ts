@@ -34,7 +34,7 @@ export class BlogService {
     }
 
     // 게시글 작성
-    createPost(postDto: PostDto) {
+    async createPost(postDto: PostDto) {
 
         // const id = this.posts.length + 1;
 
@@ -43,7 +43,7 @@ export class BlogService {
         //     ...postDto,
         //     createdDt: new Date()
         // });
-        this.blogRepository.createPost(postDto);
+        await this.blogRepository.createPost(postDto);
 
     }
 
@@ -59,21 +59,21 @@ export class BlogService {
         return await this.blogRepository.getPost(id);
     }
 
-    delete(id) {
+    async delete(id) {
         // const filterPosts = this.posts.filter((post) => post.id !== id);
         //
         // this.posts = [...filterPosts];
-        this.blogRepository.deletePost(id);
+        await this.blogRepository.deletePost(id);
     }
 
-    updatePost(id, postsDto: PostDto) {
+    async updatePost(id, postsDto: PostDto) {
         // let updateIndex = this.posts.findIndex((post) => post.id === id);
         // const updatePost = {id, ...postsDto, updatedDt: new Date()};
         //
         // this.posts[updateIndex] = updatePost;
         //
         // return updatePost;
-        this.blogRepository.updatePost(id, postsDto);
+        await this.blogRepository.updatePost(id, postsDto);
     }
 
 

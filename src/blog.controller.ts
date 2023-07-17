@@ -59,7 +59,7 @@ export class BlogController {
         console.log(`[${id}] 게시글 업데이트`);
         console.log(postDto);
 
-        return  this.blogService.updatePost(id, postDto);
+        return this.blogService.updatePost(id, postDto);
 
     }
 

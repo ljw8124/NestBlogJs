@@ -78,10 +78,16 @@ export class BlogMongoRepository implements BlogRepository {
 
     async getAllPost(): Promise<Blog[]> {
         return await this.blogModel.find().exec();
+
     }
 
     async createPost(postDto: PostDto) {
+
+        const posts = await this.getAllPost();
+        const id = posts.length + 1;
+
         const createPost = {
+            id,
             ...postDto,
             createdDt: new Date(),
             updatedDt: new Date(),
@@ -100,7 +106,7 @@ export class BlogMongoRepository implements BlogRepository {
 
     async updatePost(id: string, postDto: PostDto) {
         const updatePost = { id, ...postDto, updatedDt: new Date() };
-        await this.blogModel.findByIdAndUpdate(updatePost);
+        await this.blogModel.findByIdAndUpdate(id, updatePost);
     }
 
 }

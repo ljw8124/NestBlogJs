@@ -10,7 +10,7 @@ require('dotenv').config();
 @Module({
   imports: [
       MongooseModule.forRoot(
-          process.env.DB_URI + '/blog'
+          process.env.DB_URI
       ),
 
       // 몽고디비 스키마 설정
