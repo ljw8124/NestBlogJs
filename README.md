@@ -1,3 +1,7 @@
+## 현재 단계에서는 게시물 생성시 id 가 자동으로 오르지 않음!
+
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
