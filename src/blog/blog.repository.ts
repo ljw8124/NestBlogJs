@@ -10,7 +10,6 @@ import {Injectable} from "@nestjs/common";
 // 의존성 주입을 통해서 다른 클래스에 주입해 사용하는 클래스들을 프로바이더라고 부른다.
 
 // 블로그 리포지토리 인터페이스 정의
-
 export interface BlogRepository {
     getAllPost(): Promise<PostDto[]>;
     createPost(postDto: PostDto): Promise<void>;
@@ -72,6 +71,7 @@ export class BlogFileRepository implements BlogRepository {
 
 }
 */
+
 // 몽고디비용 리포지토리
 @Injectable()
 export class BlogMongoRepository implements BlogRepository {
@@ -102,7 +102,10 @@ export class BlogMongoRepository implements BlogRepository {
         const allPosts: Blog[]  = await this.getAllPost();
 
         const post = allPosts.find(post => post.id === id);
-        // 게시글 못찾았을 경우 예외처리 필요
+
+        // 해당 값이 null 또는 undefined가 아님을 TypeScript 컴파일러에게 명시적으로 알려주는 것이 '!' 이다.
+        // 하지만 이 값이 실제로 null/undefined 인 경우 런타임에서 에러가 나올 수 있으므로 주의해야한다..
+        // 따라서 게시글 못찾았을 경우 예외처리 필요
         return post!;
     }
 
