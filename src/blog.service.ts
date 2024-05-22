@@ -47,7 +47,7 @@ export class BlogService {
 
     }
 
-    async getPost(id) {
+    async getPost(id: string) {
         // post 들 중에 찾고있는 id 와 같은 post 들을 반환
         // const post = this.posts.find(post => {
         //    return post.id === id;
@@ -59,14 +59,14 @@ export class BlogService {
         return await this.blogRepository.getPost(id);
     }
 
-    async delete(id) {
+    async delete(id: string): Promise<void> {
         // const filterPosts = this.posts.filter((post) => post.id !== id);
         //
         // this.posts = [...filterPosts];
         await this.blogRepository.deletePost(id);
     }
 
-    async updatePost(id, postsDto: PostDto) {
+    async updatePost(id: string, postsDto: PostDto): Promise<void> {
         // let updateIndex = this.posts.findIndex((post) => post.id === id);
         // const updatePost = {id, ...postsDto, updatedDt: new Date()};
         //

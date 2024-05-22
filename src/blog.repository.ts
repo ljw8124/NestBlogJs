@@ -10,14 +10,16 @@ import {Injectable} from "@nestjs/common";
 // 의존성 주입을 통해서 다른 클래스에 주입해 사용하는 클래스들을 프로바이더라고 부른다.
 
 // 블로그 리포지토리 인터페이스 정의
+
 export interface BlogRepository {
     getAllPost(): Promise<PostDto[]>;
-    createPost(postDto: PostDto);
+    createPost(postDto: PostDto): Promise<void>;
     getPost(id: String): Promise<PostDto>;
-    deletePost(id: String);
-    updatePost(id: String, postDto: PostDto);
+    deletePost(id: String): Promise<void>;
+    updatePost(id: String, postDto: PostDto): Promise<void>;
 }
-
+/*
+// 몽고디비 API 사용전 코드
 @Injectable()
 export class BlogFileRepository implements BlogRepository {
     FILE_NAME = './src/blog.data.json';
@@ -35,7 +37,7 @@ export class BlogFileRepository implements BlogRepository {
         const posts = await this.getAllPost();
 
         const id = posts.length + 1;
-        const createPost = {id: id.toString(), ... postDto, createdDt: new Date()};
+        const createPost = {id: id.toString(), ...postDto, createdDt: new Date()};
         posts.push(createPost);
 
         await writeFile(this.FILE_NAME, JSON.stringify(posts));
@@ -46,7 +48,7 @@ export class BlogFileRepository implements BlogRepository {
         const posts = await this.getAllPost();
         const result = posts.find((post) => post.id === id);
 
-        return result;
+        return result!;
     }
 
     // 게시글 삭제 -> 파라미터로 받은 아이디와 다른 게시글들만 배열로 만들어서 새로 넣음
@@ -69,7 +71,7 @@ export class BlogFileRepository implements BlogRepository {
     }
 
 }
-
+*/
 // 몽고디비용 리포지토리
 @Injectable()
 export class BlogMongoRepository implements BlogRepository {
@@ -81,14 +83,14 @@ export class BlogMongoRepository implements BlogRepository {
 
     }
 
-    async createPost(postDto: PostDto) {
+    async createPost(postDto: PostDto): Promise<void> {
 
         const posts = await this.getAllPost();
         const id = posts.length + 1;
 
         const createPost = {
-            id,
             ...postDto,
+            id,
             createdDt: new Date(),
             updatedDt: new Date(),
         };
@@ -96,8 +98,12 @@ export class BlogMongoRepository implements BlogRepository {
         await this.blogModel.create(createPost);
     }
 
-    async getPost(id: string): Promise<PostDto> {
-        return await this.blogModel.findById(id);
+    async getPost(id: string): Promise<Blog> {
+        const allPosts: Blog[]  = await this.getAllPost();
+
+        const post = allPosts.find(post => post.id === id);
+        // 게시글 못찾았을 경우 예외처리 필요
+        return post!;
     }
 
     async deletePost(id: string) {
@@ -105,7 +111,7 @@ export class BlogMongoRepository implements BlogRepository {
     }
 
     async updatePost(id: string, postDto: PostDto) {
-        const updatePost = { id, ...postDto, updatedDt: new Date() };
+        const updatePost = { ...postDto, id, updatedDt: new Date() };
         await this.blogModel.findByIdAndUpdate(id, updatePost);
     }
 

@@ -55,7 +55,7 @@ export class BlogController {
     }
 
     @Put('/:id')
-    updatePost(@Param('id') id, @Body() postDto: any) {
+    updatePost(@Param('id') id: string, @Body() postDto: any) {
         console.log(`[${id}] 게시글 업데이트`);
         console.log(postDto);
 
