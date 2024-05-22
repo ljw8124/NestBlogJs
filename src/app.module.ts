@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from "@nestjs/mongoose";
-import { BlogController } from './blog.controller';
-import { BlogService } from './blog.service';
-import { Blog, BlogSchema } from "./blog.schema";
-import { /*BlogFileRepository,*/ BlogMongoRepository } from "./blog.repository";
+import { BlogController } from './blog/blog.controller';
+import { BlogService } from './blog/blog.service';
+import { Blog, BlogSchema } from "./blog/blog.schema";
+import { /*BlogFileRepository,*/ BlogMongoRepository } from "./blog/blog.repository";
 
 require('dotenv').config();
 
