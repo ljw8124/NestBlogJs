@@ -1,8 +1,10 @@
-import {Controller, Param, Body, Delete, Get, Post, Put} from "@nestjs/common";
+import {Controller, Param, Body, Delete, Get, Post, Put, UseGuards} from "@nestjs/common";
 // @Body 는 함수의 body 로 오는 값을 매개변수에 할당하고,
 // @Param 은 URL param 의 값을 함수 매개변수에 할당한다.
 import {BlogService} from "./blog.service";
+import {AuthGuard} from "../auth/auth.guard";
 
+@UseGuards(AuthGuard)
 // 컨트롤러의 역할은 HTTP 요청을 특정 함수가 실행하는 것이다. -> 실제 로직은 Service 에서 실행
 // 클래스에 붙이는 Controller 데코레이터
 // Controller('blog') 의 의미는 {서버주소}/blog 라는 의미이다.
