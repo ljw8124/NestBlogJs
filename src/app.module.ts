@@ -6,10 +6,12 @@ import { Blog, BlogSchema } from "./blog/blog.schema";
 import { /*BlogFileRepository,*/ BlogMongoRepository } from "./blog/blog.repository";
 import {config} from "./app.config";
 
+const DB_ADDRESS = `mongodb://${config.db.host}:${config.db.port}/${config.db.name}`;
+
 @Module({
   imports: [
       MongooseModule.forRoot(
-          config.db.uri
+          DB_ADDRESS
       ),
       // 몽고디비 스키마 설정
       MongooseModule.forFeature([{name: Blog.name, schema: BlogSchema}]),

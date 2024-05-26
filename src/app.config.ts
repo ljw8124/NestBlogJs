@@ -16,6 +16,8 @@ const SRV_STATE = getEnv('SERVER_STATE');
 
 export const config = {
     db: {
-        uri: getEnv(`${SRV_STATE}_DB_URI`),
+        host: getEnv(`${SRV_STATE}_DB_HOST`),
+        port: getEnv(`${SRV_STATE}_DB_PORT`),
+        name: getEnv(`${SRV_STATE}_DB_NAME`),
     },
 }
