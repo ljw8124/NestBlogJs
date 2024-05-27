@@ -10,7 +10,7 @@ Content-Type: application/json
 {
   "title": "!안녕하세요!",
   "content": "NestJS 테스트입니다!!",
-  "name": "이를믊"
+  "author": "만든이"
 }
 
 ### 특정 게시글 조회
@@ -26,5 +26,5 @@ Content-Type: application/json
 {
   "title": "수정된 타이틀!",
   "content": "수정된 내용!!",
-  "name": "수정한사람!"
+  "author": "수정한사람!"
 }
