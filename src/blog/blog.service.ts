@@ -1,4 +1,4 @@
-import {PostDto} from './blog.model'; // 게시글의 타입정보 임포트
+import {PostDto} from '../dto/blog.model'; // 게시글의 타입정보 임포트
 import {Injectable} from "@nestjs/common";
 
 // service 는 중간 매개 역할만 하게됨
