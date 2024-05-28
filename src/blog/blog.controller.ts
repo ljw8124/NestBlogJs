@@ -26,21 +26,21 @@ export class BlogController {
     }
 
     @Post()
-    createPost(@Body() postDto: any) { // HTTP 요청의 body 내용을 post 에 할당
+    async createPost(@Body() postDto: any) { // HTTP 요청의 body 내용을 post 에 할당
         console.log('게시글 작성');
         console.log('success', postDto);
 
-        this.blogService.createPost(postDto);
+        await this.blogService.createPost(postDto);
 
         return "success";
     }
 
     // 서비스에서 비동기처리로 수정했기 때문에 비동기 처리해주어야 함
-    @Get('/:id')    // GET 에 URL 매개변수 id 가 있는 요청 처리
-    async getPost(@Param('id') id: string) {
-        console.log(`[id: ${id}] 게시글 하나 가져오기`);
+    @Get('/:idx')    // GET 에 URL 매개변수 id 가 있는 요청 처리
+    async getPost(@Param('idx') idx: string) {
+        console.log(`[idx: ${idx}] 게시글 하나 가져오기`);
 
-        const post = await this.blogService.getPost(id);
+        const post = await this.blogService.getPost(idx);
         console.log(post);
 
         return post
@@ -48,20 +48,20 @@ export class BlogController {
     }
 
     @Delete('/:id')
-    deletePost(@Param('id') id: string) {
+    async deletePost(@Param('idx') idx: string) {
         console.log('게시글 삭제');
 
-        this.blogService.delete(id);
+        await this.blogService.delete(idx);
 
         return 'success';
     }
 
-    @Put('/:id')
-    updatePost(@Param('id') id: string, @Body() postDto: any) {
-        console.log(`[${id}] 게시글 업데이트`);
+    @Put('/:idx')
+    async updatePost(@Param('idx') idx: string, @Body() postDto: any) {
+        console.log(`[${idx}] 게시글 업데이트`);
         console.log(postDto);
 
-        return this.blogService.updatePost(id, postDto);
+        return await this.blogService.updatePost(idx, postDto);
 
     }
 

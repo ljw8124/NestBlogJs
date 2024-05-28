@@ -84,13 +84,12 @@ export class BlogMongoRepository implements BlogRepository {
     }
 
     async createPost(postDto: PostDto): Promise<void> {
-
         const posts = await this.getAllPost();
-        const id = posts.length + 1;
+        const idx = posts.length + 1;
 
         const createPost = {
             ...postDto,
-            id,
+            idx,
             createdDt: new Date(),
             updatedDt: new Date(),
         };
@@ -98,10 +97,10 @@ export class BlogMongoRepository implements BlogRepository {
         await this.blogModel.create(createPost);
     }
 
-    async getPost(id: string): Promise<Blog> {
+    async getPost(idx: string): Promise<Blog> {
         const allPosts: Blog[]  = await this.getAllPost();
 
-        const post = allPosts.find(post => post.id === id);
+        const post = allPosts.find(post => post.idx === idx);
 
         // 해당 값이 null 또는 undefined가 아님을 TypeScript 컴파일러에게 명시적으로 알려주는 것이 '!' 이다.
         // 하지만 이 값이 실제로 null/undefined 인 경우 런타임에서 에러가 나올 수 있으므로 주의해야한다..
@@ -109,13 +108,14 @@ export class BlogMongoRepository implements BlogRepository {
         return post!;
     }
 
-    async deletePost(id: string) {
-        await this.blogModel.findByIdAndDelete(id);
+    async deletePost(idx: string) {
+        await this.blogModel.findByIdAndDelete(idx);
+
     }
 
-    async updatePost(id: string, postDto: PostDto) {
-        const updatePost = { ...postDto, id, updatedDt: new Date() };
-        await this.blogModel.findByIdAndUpdate(id, updatePost);
+    async updatePost(idx: string, postDto: PostDto) {
+        const updatePost = { ...postDto, idx, updatedDt: new Date() };
+        await this.blogModel.findByIdAndUpdate(idx, updatePost);
     }
 
 }
