@@ -2,6 +2,7 @@
 
 import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
 import {Document} from "mongoose";
+import {IsDate, IsNotEmpty, IsString} from "class-validator";
 
 // 블로크 타입이면서 몽고디비의 도큐먼트로 사용할 수 있는 타입
 export type BlogDocument = Blog & Document; //& 를 씀으로서 교차타입으로 생성
@@ -11,22 +12,33 @@ export type BlogDocument = Blog & Document; //& 를 씀으로서 교차타입으
 export class Blog {
     // 스키마의 프로퍼티임을 나타냄, @Prop({required: true}) 와 같이 옵션을 추가할 수 있음
     @Prop()
-    idx: string;
+    @IsNotEmpty()
+    @IsString()
+    readonly idx: string;
 
     @Prop()
-    title: string;
+    @IsNotEmpty()
+    @IsString()
+    readonly title: string;
 
     @Prop()
-    content: string;
+    @IsNotEmpty()
+    @IsString()
+    readonly content: string;
 
     @Prop()
-    author: string;
+    @IsNotEmpty()
+    @IsString()
+    readonly author: string;
 
     @Prop()
-    createdDt: Date;
+    @IsNotEmpty()
+    @IsDate()
+    readonly createdDt: Date;
 
     @Prop()
-    updatedDt: Date;
+    @IsDate()
+    readonly updatedDt: Date;
 }
 
 // Blog 를 기반으로 스키마 생성
