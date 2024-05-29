@@ -17,10 +17,10 @@ Content-Type: application/json
 GET {{server}}/blog/1
 
 ### 게시글 삭제
-DELETE {{server}}/blog/1
+DELETE {{server}}/blog/6656d00b7300d11074842bda
 
 ### 게시글 수정
-PUT {{server}}/blog/2
+PUT {{server}}/blog/66543f2c460b7bdd23e73ee1
 Content-Type: application/json
 
 {
