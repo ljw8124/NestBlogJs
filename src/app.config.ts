@@ -20,4 +20,11 @@ export const config = {
         port: getEnv(`${SRV_STATE}_DB_PORT`),
         name: getEnv(`${SRV_STATE}_DB_NAME`),
     },
+
+    server: {
+        state: SRV_STATE,
+        port: getEnv(`${SRV_STATE}_SERVER_PORT`),
+    },
+
+
 }
