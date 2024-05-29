@@ -47,7 +47,7 @@ export class BlogController {
 
     }
 
-    @Delete('/:id')
+    @Delete('/:idx')
     async deletePost(@Param('idx') idx: string) {
         console.log('게시글 삭제');
 
