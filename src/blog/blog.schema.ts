@@ -10,6 +10,9 @@ export type BlogDocument = Blog & Document; //& 를 씀으로서 교차타입으
 // 스키마임을 나타냄
 @Schema({versionKey: false})
 export class Blog {
+    // id 값은 MongoDB 가 만들어줌..
+    // 그러므로 따로 프로퍼티로 만들어낼 필요가 없음
+
     // 스키마의 프로퍼티임을 나타냄, @Prop({required: true}) 와 같이 옵션을 추가할 수 있음
     @Prop()
     @IsNotEmpty()

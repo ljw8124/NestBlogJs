@@ -5,7 +5,8 @@ import {Blog, BlogDocument} from "./blog.schema";
 // 블로그의 영속성 계층을 위한 코드
 import {readFile, writeFile} from "fs/promises";
 import {PostDto} from "../dto/blog.model";
-import {Injectable} from "@nestjs/common";
+import {Injectable, NotFoundException} from "@nestjs/common";
+import {transformException} from "@nestjs/platform-express/multer/multer/multer.utils";
 // 프레임워크에서 객체를 생성하기 위한 의존성 주입
 // 의존성 주입을 통해서 다른 클래스에 주입해 사용하는 클래스들을 프로바이더라고 부른다.
 
@@ -13,9 +14,9 @@ import {Injectable} from "@nestjs/common";
 export interface BlogRepository {
     getAllPost(): Promise<PostDto[]>;
     createPost(postDto: PostDto): Promise<void>;
-    getPost(id: String): Promise<PostDto>;
-    deletePost(id: String): Promise<void>;
-    updatePost(id: String, postDto: PostDto): Promise<void>;
+    getPost(postId: String): Promise<PostDto>;
+    deletePost(postId: String): Promise<void>;
+    updatePost(postId: String, postDto: PostDto): Promise<void>;
 }
 /*
 // 몽고디비 API 사용전 코드
@@ -79,8 +80,9 @@ export class BlogMongoRepository implements BlogRepository {
     constructor(@InjectModel(Blog.name) private blogModel: Model<BlogDocument>) { }
 
     async getAllPost(): Promise<Blog[]> {
+        // exec() 를 붙이든 말든 데이터상으로는 동일하지만,
+        // promise 를 온전히 반환함으로써 에러가 났을 때 처리가 용이해진다.
         return await this.blogModel.find().exec();
-
     }
 
     async createPost(postDto: PostDto): Promise<void> {
@@ -97,25 +99,25 @@ export class BlogMongoRepository implements BlogRepository {
         await this.blogModel.create(createPost);
     }
 
-    async getPost(idx: string): Promise<Blog> {
-        const allPosts: Blog[]  = await this.getAllPost();
+    async getPost(postId: string): Promise<Blog> {
+        const post = await this.blogModel.findById(postId).exec();
 
-        const post = allPosts.find(post => post.idx === idx);
+        if(!post) {
+            throw new NotFoundException(`Post ${postId} is not found}`);
+        }
 
-        // 해당 값이 null 또는 undefined가 아님을 TypeScript 컴파일러에게 명시적으로 알려주는 것이 '!' 이다.
-        // 하지만 이 값이 실제로 null/undefined 인 경우 런타임에서 에러가 나올 수 있으므로 주의해야한다..
-        // 따라서 게시글 못찾았을 경우 예외처리 필요
-        return post!;
+        return post;
     }
 
-    async deletePost(idx: string) {
-        await this.blogModel.findByIdAndDelete(idx);
+    async deletePost(postId: string) {
+        await this.blogModel.findByIdAndDelete(postId);
 
     }
 
-    async updatePost(idx: string, postDto: PostDto) {
-        const updatePost = { ...postDto, idx, updatedDt: new Date() };
-        await this.blogModel.findByIdAndUpdate(idx, updatePost);
+    async updatePost(postId: string, postDto: PostDto) {
+        const updatePost = { ...postDto, updatedDt: new Date() };
+
+        await this.blogModel.findByIdAndUpdate(postId, updatePost);
     }
 
 }
