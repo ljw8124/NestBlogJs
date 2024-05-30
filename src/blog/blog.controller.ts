@@ -41,7 +41,6 @@ export class BlogController {
         console.log(`[postId: ${postId}] 게시글 하나 가져오기`);
 
         const post = await this.blogService.getPost(postId);
-        console.log(post);
 
         return post
 
@@ -59,7 +58,6 @@ export class BlogController {
     @Put('/:postId')
     async updatePost(@Param('postId') postId: string, @Body() postDto: any) {
         console.log(`[${postId}] 게시글 업데이트`);
-        console.log(postDto);
 
         return await this.blogService.updatePost(postId, postDto);
 
