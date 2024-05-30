@@ -27,8 +27,7 @@ export class BlogController {
 
     @Post()
     async createPost(@Body() postDto: any) { // HTTP 요청의 body 내용을 post 에 할당
-        console.log('게시글 작성');
-        console.log('success', postDto);
+        console.log('create post success', postDto);
 
         await this.blogService.createPost(postDto);
 

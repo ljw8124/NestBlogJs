@@ -86,11 +86,11 @@ export class BlogMongoRepository implements BlogRepository {
 
     async createPost(postDto: PostDto): Promise<void> {
         const posts = await this.getAllPost();
-        const idx = posts.length + 1;
+        const postNo = posts.length + 1;
 
         const createPost = {
             ...postDto,
-            idx,
+            postNo,
             createdDt: new Date(),
             updatedDt: new Date(),
         };

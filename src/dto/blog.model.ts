@@ -1,6 +1,6 @@
 
 export interface PostDto {
-    idx: string;
+    postNo: number;
     title: string;
     content: string;
     author: string;
