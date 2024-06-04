@@ -3,6 +3,11 @@ export interface UserDto {
     id: string,
     password: string,
     name: string,
-    email: string,
-    phoneNum: string,
+    regDate: Date;
+
+    email?: string,
+    phoneNum?: string,
+
+    isEnable: boolean
+
 }
