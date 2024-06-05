@@ -9,7 +9,7 @@ interface UserRepo {
     createUser(userDto: UserDto): Promise<void>;
     getUser(userId: string): Promise<UserDto>;
     updateUser(userId: string, userDto: UserDto): Promise<void>;
-    enableUser(userDto: UserDto, isEnable: boolean): Promise<void>;
+    enableUser(userDto: UserDto): Promise<void>;
 }
 
 @Injectable()
@@ -35,6 +35,7 @@ export class UserRepository implements UserRepo{
         const newUser = {
             ...userDto,
             createdDt: new Date(),
+            isEnable: true,
         };
 
         await this.userModel.create(newUser);
@@ -46,14 +47,14 @@ export class UserRepository implements UserRepo{
     }
 
     // 삭제 대신 해당 사용자 아이디 사용 못하게 수정
-    async enableUser(userDto: UserDto, isEnable: boolean): Promise<void> {
+    async enableUser(userDto: UserDto): Promise<void> {
         const userId = userDto.id;
         const deleteUserInfo = {
             ...userDto,
-            isEnable: isEnable,
+            isEnable: false,
         }
 
-        await this.userModel.findByIdAndUpdate()
+        await this.userModel.findByIdAndUpdate(userId, deleteUserInfo);
     }
 
 }
