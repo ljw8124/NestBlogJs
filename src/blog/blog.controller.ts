@@ -3,6 +3,7 @@ import {Controller, Param, Body, Delete, Get, Post, Put, UseGuards} from "@nestj
 // @Param 은 URL param 의 값을 함수 매개변수에 할당한다.
 import {BlogService} from "./blog.service";
 import {AuthGuard} from "../auth/auth.guard";
+import {PostDto} from "../dto/blog.model";
 
 @UseGuards(AuthGuard)
 // 컨트롤러의 역할은 HTTP 요청을 특정 함수가 실행하는 것이다. -> 실제 로직은 Service 에서 실행
@@ -26,7 +27,7 @@ export class BlogController {
     }
 
     @Post()
-    async createPost(@Body() postDto: any) { // HTTP 요청의 body 내용을 post 에 할당
+    async createPost(@Body() postDto: PostDto) { // HTTP 요청의 body 내용을 post 에 할당
         console.log('create post success', postDto);
 
         await this.blogService.createPost(postDto);
@@ -55,7 +56,7 @@ export class BlogController {
     }
 
     @Put('/:postId')
-    async updatePost(@Param('postId') postId: string, @Body() postDto: any) {
+    async updatePost(@Param('postId') postId: string, @Body() postDto: PostDto) {
         console.log(`[${postId}] 게시글 업데이트`);
 
         return await this.blogService.updatePost(postId, postDto);
