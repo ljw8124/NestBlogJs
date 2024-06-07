@@ -9,7 +9,7 @@ interface UserRepo {
     createUser(userDto: UserDto): Promise<void>;
     getUser(userId: string): Promise<UserDto>;
     updateUser(userId: string, userDto: UserDto): Promise<void>;
-    enableUser(userDto: UserDto): Promise<void>;
+    deleteUser(userDto: UserDto): Promise<void>;
 }
 
 @Injectable()
@@ -47,7 +47,7 @@ export class UserRepository implements UserRepo{
     }
 
     // 삭제 대신 해당 사용자 아이디 사용 못하게 수정
-    async enableUser(userDto: UserDto): Promise<void> {
+    async deleteUser(userDto: UserDto): Promise<void> {
         const userId = userDto.id;
         const deleteUserInfo = {
             ...userDto,

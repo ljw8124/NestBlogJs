@@ -24,7 +24,7 @@ export class UserService {
     }
 
     async deleteUser(userDto: UserDto) : Promise<void> {
-        return await this.userRepository.enableUser(userDto);
+        return await this.userRepository.deleteUser(userDto);
     }
 
 }
