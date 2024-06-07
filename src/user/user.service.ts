@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {ConflictException, Injectable, UnauthorizedException} from '@nestjs/common';
 import {UserRepository} from "./user.repository";
 import {UserDto} from "../dto/user.model";
 import {User} from "./user.schema";
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class UserService {
@@ -12,7 +13,25 @@ export class UserService {
     }
 
     async createUser(userDto: UserDto) : Promise<void> {
-        return await this.userRepository.createUser(userDto);
+        const salt = 10;
+        const {id, password} = userDto;
+
+        const isExistUser = await this.userRepository.getUser(id);
+
+        if(isExistUser) {
+            throw new ConflictException('already exist user');
+        }
+
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const newUser: UserDto = {
+            ...userDto,
+            password: hashedPassword,
+            regDate: new Date(),
+            isEnable: true
+        }
+
+        return await this.userRepository.createUser(newUser);
     }
 
     async getUser(userId: string) : Promise<User> {
@@ -24,7 +43,17 @@ export class UserService {
     }
 
     async deleteUser(userDto: UserDto) : Promise<void> {
-        return await this.userRepository.deleteUser(userDto);
+        const isExistUser = await this.userRepository.getUser(userDto.id);
+
+        if(isExistUser) {
+            throw new UnauthorizedException(`User with id ${userDto.id} does not exist`);
+        }
+
+        const delUser = {
+            ...userDto,
+            isEnable: false
+        }
+        return await this.userRepository.deleteUser(delUser);
     }
 
 }

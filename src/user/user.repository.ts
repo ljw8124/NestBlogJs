@@ -1,4 +1,4 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import {Injectable, NotFoundException, UnauthorizedException} from '@nestjs/common';
 import {UserDto} from "../dto/user.model";
 import {Model} from "mongoose";
 import {InjectModel} from "@nestjs/mongoose";
@@ -24,20 +24,10 @@ export class UserRepository implements UserRepo{
     async getUser(userId: string): Promise<User> {
         const user = await this.userModel.findById(userId).exec();
 
-        if(!user) {
-            throw new NotFoundException("User not found");
-        }
-
-        return user;
+        return user!;
     }
 
-    async createUser(userDto: UserDto): Promise<void> {
-        const newUser = {
-            ...userDto,
-            createdDt: new Date(),
-            isEnable: true,
-        };
-
+    async createUser(newUser: UserDto): Promise<void> {
         await this.userModel.create(newUser);
 
     }
@@ -49,12 +39,8 @@ export class UserRepository implements UserRepo{
     // 삭제 대신 해당 사용자 아이디 사용 못하게 수정
     async deleteUser(userDto: UserDto): Promise<void> {
         const userId = userDto.id;
-        const deleteUserInfo = {
-            ...userDto,
-            isEnable: false,
-        }
 
-        await this.userModel.findByIdAndUpdate(userId, deleteUserInfo);
+        await this.userModel.findByIdAndUpdate(userId, userDto);
     }
 
 }
