@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Post, Put, UseGuards} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put, UseGuards} from '@nestjs/common';
 import {AuthGuard} from "../auth/auth.guard";
 import {UserService} from "./user.service";
 import {UserDto} from "../dto/user.model";
@@ -38,7 +38,7 @@ export class UserController {
         await this.userService.updateUser(userId, userInfo);
     }
 
-    @Put('/:userId')
+    @Delete('/:userId')
     async deleteUser(@Param('userId') userId: string, @Body() userInfo: UserDto) : Promise<void> {
         console.log(`Delete(Unable) User ${userId}`);
 
