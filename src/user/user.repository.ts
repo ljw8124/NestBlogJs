@@ -1,4 +1,4 @@
-import {Injectable, NotFoundException, UnauthorizedException} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {UserDto} from "../dto/user.model";
 import {Model} from "mongoose";
 import {InjectModel} from "@nestjs/mongoose";
