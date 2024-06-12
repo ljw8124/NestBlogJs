@@ -1,0 +1,31 @@
+### 유저목록 조회
+GET {{server}}/user
+
+### 새로운 유저 만들기
+POST {{server}}/user
+Content-Type: application/json
+
+{
+  "id": "",
+  "password": "",
+  "name": "",
+  "email": "",
+  "phoneNum": ""
+}
+
+### 유저정보변경
+PUT {{server}}}/user/userId
+Content-Type: application/json
+
+{
+  "id": "",
+  "password": "",
+  "name": "",
+  "email": "",
+  "phoneNum": ""
+}
+
+### 유저 삭제(비활성화)
+DELETE {{server}}}/user/userId
+
+
