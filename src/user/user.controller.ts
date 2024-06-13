@@ -35,7 +35,7 @@ export class UserController {
     async updateUser(@Param('userId') userId: string, @Body() userInfo: UserDto) : Promise<void> {
         console.log(`Update User ${userId}`);
 
-        await this.userService.updateUser(userId, userInfo);
+        await this.userService.updateUser(userInfo);
     }
 
     @Delete('/:userId')

@@ -8,7 +8,7 @@ interface UserRepo {
     getAllUser(): Promise<UserDto[]>;
     createUser(userDto: UserDto): Promise<void>;
     getUser(userId: string): Promise<UserDto>;
-    updateUser(userId: string, userDto: UserDto): Promise<void>;
+    updateUser(userDto: UserDto): Promise<void>;
     deleteUser(userDto: UserDto): Promise<void>;
 }
 
@@ -32,8 +32,8 @@ export class UserRepository implements UserRepo{
 
     }
 
-    async updateUser(userId: string, userDto: UserDto): Promise<void> {
-        await this.userModel.findByIdAndUpdate(userId, userDto);
+    async updateUser(userDto: UserDto): Promise<void> {
+        await this.userModel.findByIdAndUpdate(userDto.id, userDto);
     }
 
     // 삭제 대신 해당 사용자 아이디 사용 못하게 수정
