@@ -1,16 +1,19 @@
 ### 유저목록 조회
 GET {{server}}/user
 
+### 유저 조회
+GET {{server}}/user/6670d3350dbcb92a4b8783e4
+
 ### 새로운 유저 만들기
 POST {{server}}/user
 Content-Type: application/json
 
 {
-  "id": "",
-  "password": "",
-  "name": "",
-  "email": "",
-  "phoneNum": ""
+  "id": "testID",
+  "password": "password",
+  "name": "testUser",
+  "email": "testUser@naver.com",
+  "phoneNum": "010-1234-1234"
 }
 
 ### 유저정보변경

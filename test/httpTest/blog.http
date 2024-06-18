@@ -8,8 +8,8 @@ POST {{server}}/blog
 Content-Type: application/json
 
 {
-  "title": "!안녕하세요!",
-  "content": "NestJS 테스트입니다!!",
+  "title": "테스트용!",
+  "content": "테스트용!",
   "author": "만든이"
 }
 
