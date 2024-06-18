@@ -16,11 +16,11 @@ export class UserService {
         const salt = 10;
         const {id, password} = userDto;
 
-        const isExistUser = await this.userRepository.getUser(id);
-
-        if(isExistUser) {
-            throw new ConflictException('already exist user');
-        }
+        // const isExistUser = await this.userRepository.getUser(id);
+        //
+        // if(isExistUser) {
+        //     throw new ConflictException('already exist user');
+        // }
 
         const hashedPassword = await bcrypt.hash(password, salt);
 

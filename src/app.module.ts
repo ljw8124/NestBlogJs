@@ -3,7 +3,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { BlogController } from './blog/blog.controller';
 import { BlogService } from './blog/blog.service';
 import { Blog, BlogSchema } from "./blog/blog.schema";
-import { /*BlogFileRepository,*/ BlogMongoRepository } from "./blog/blog.repository";
+import { BlogRepository } from "./blog/blog.repository";
 import {config} from "./app.config";
 import { UserController } from './user/user.controller';
 import { UserService } from './user/user.service';
@@ -27,7 +27,7 @@ const DB_ADDRESS = `mongodb://${config.db.host}:${config.db.port}/${config.db.na
       BlogController, UserController
   ],
   providers: [
-      BlogService, /*BlogFileRepository,*/ BlogMongoRepository,
+      BlogService, BlogRepository,
       UserService, UserRepository,
   ],
 })
