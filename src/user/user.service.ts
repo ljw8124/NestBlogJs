@@ -39,11 +39,11 @@ export class UserService {
     }
 
     async updateUser(userDto: UserDto) : Promise<void> {
-        const isExistUser = await this.userRepository.getUser(userDto.id);
-
-        if(!isExistUser) {
-            throw new UnauthorizedException(`User with id ${userDto.id} does not exist`);
-        }
+        // const isExistUser = await this.userRepository.getUser(userDto.id);
+        //
+        // if(!isExistUser) {
+        //     throw new UnauthorizedException(`User with id ${userDto.id} does not exist`);
+        // }
 
         return await this.userRepository.updateUser(userDto);
     }
