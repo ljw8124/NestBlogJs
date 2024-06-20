@@ -8,21 +8,6 @@ import {BlogRepository} from "./blog.repository";
 @Injectable()
 export class BlogService {
 
-    // 게시글 배열 선언
-    // posts = [];
-    // Injectable 선언으로 주석처리
-    // blogRepository: BlogRepository;
-    //
-    // constructor() {
-    //     this.blogRepository = new BlogFileRepository();
-    // }
-
-    // BlogRepository 는 인터페이스 이므로 클래스를 생성하지 못하고, 의존성주입 또한 하지 못한다
-    // 의존성 주입을 할 때에는 실제로 사용할 클래스를 타입으로 주면 된다
-    // constructor(private blogRepository: BlogFileRepository) {
-    //
-    // }
-
     // MongoRepository 를 바라보도록 수정
     constructor(private blogRepository: BlogRepository) {}
 

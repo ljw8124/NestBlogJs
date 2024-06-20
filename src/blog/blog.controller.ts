@@ -28,8 +28,6 @@ export class BlogController {
 
     @Post()
     async createPost(@Body() postDto: PostDto) { // HTTP 요청의 body 내용을 post 에 할당
-        console.log('create post success', postDto);
-
         await this.blogService.createPost(postDto);
 
         return "success";
@@ -38,8 +36,6 @@ export class BlogController {
     // 서비스에서 비동기처리로 수정했기 때문에 비동기 처리해주어야 함
     @Get('/:postId')    // GET 에 URL 매개변수 id 가 있는 요청 처리
     async getPost(@Param('postId') postId: string) {
-        console.log(`[postId: ${postId}] 게시글 하나 가져오기`);
-
         const post = await this.blogService.getPost(postId);
 
         return post
@@ -48,8 +44,6 @@ export class BlogController {
 
     @Delete('/:postId')
     async deletePost(@Param('postId') postId: string) {
-        console.log(`${postId} 게시글 삭제`);
-
         await this.blogService.delete(postId);
 
         return 'success';
@@ -57,8 +51,6 @@ export class BlogController {
 
     @Put('/:postId')
     async updatePost(@Param('postId') postId: string, @Body() postDto: PostDto) {
-        console.log(`[${postId}] 게시글 업데이트`);
-
         return await this.blogService.updatePost(postId, postDto);
 
     }
