@@ -13,3 +13,23 @@
  nest g service user --no-spec 
 ```
 
+API 서버 형식으로 구성했기 때문에 화면에서 호출시 아래과 같은 형식으로 request 보내야함
+```js
+  let url = 'url address';
+  
+  $.ajax({
+    url: url,
+    type: 'GET/POST/UPDATE/DELETE',
+    data: data,
+    success: function(result) {
+      // 후처리
+      callback(result);
+    },
+    error: function(error) {
+      // 후처리
+      callback(error);
+    }
+  });
+  
+```
+
