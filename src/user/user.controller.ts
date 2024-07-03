@@ -17,7 +17,7 @@ export class UserController {
 
     @Post()
     async createUser(@Body() userInfo: UserDto) : Promise<void> {
-        console.log(`Create User ${userInfo}`);
+        console.log(`Create User ${userInfo.id}`);
 
         await this.userService.createUser(userInfo);
     }
