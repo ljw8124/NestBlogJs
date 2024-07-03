@@ -4,6 +4,10 @@
 ```shell
  # 컨테이너 실행
  docker start [Container명]
+ 
+ # 몽고디비 실행 명령어
+ docker run --name '사용할 이름' -v ~/data:/data/db -d -p '포트번호':'포트번호' mongo
+ 
  # 실행 확인
  docker ps
  
