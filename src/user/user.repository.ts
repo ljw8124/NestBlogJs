@@ -18,11 +18,14 @@ export class UserRepository implements UserRepo{
     constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
 
     async getAllUser(): Promise<UserDto[]> {
+
+
         return await this.userModel.find().exec();
     }
 
     async getUser(userId: string): Promise<User> {
-        const user = await this.userModel.findById(userId).exec();
+
+        const user = await this.userModel.findOne({ id: userId }).exec();
 
         return user!;
     }
