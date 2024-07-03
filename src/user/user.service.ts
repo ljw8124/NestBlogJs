@@ -22,11 +22,9 @@ export class UserService {
         //     throw new ConflictException('already exist user');
         // }
 
-        const hashedPassword = await bcrypt.hash(password, salt);
-
         const newUser: UserDto = {
             ...userDto,
-            password: hashedPassword,
+            password: await bcrypt.hash(password, salt),
             regDate: new Date(),
             isEnable: true
         }
