@@ -16,11 +16,11 @@ export class UserService {
         const salt = 10;
         const {id, password} = userDto;
 
-        // const isExistUser = await this.userRepository.getUser(id);
-        //
-        // if(isExistUser) {
-        //     throw new ConflictException('already exist user');
-        // }
+        const isExistUser = await this.userRepository.getUser(id);
+
+        if(isExistUser) {
+            throw new ConflictException('already exist user');
+        }
 
         const newUser: UserDto = {
             ...userDto,
@@ -37,21 +37,21 @@ export class UserService {
     }
 
     async updateUser(userDto: UserDto) : Promise<void> {
-        // const isExistUser = await this.userRepository.getUser(userDto.id);
-        //
-        // if(!isExistUser) {
-        //     throw new UnauthorizedException(`User with id ${userDto.id} does not exist`);
-        // }
+        const isExistUser = await this.userRepository.getUser(userDto.id);
+
+        if(!isExistUser) {
+            throw new UnauthorizedException(`User with id ${userDto.id} does not exist`);
+        }
 
         return await this.userRepository.updateUser(userDto);
     }
 
     async deleteUser(userDto: UserDto) : Promise<void> {
-        // const isExistUser = await this.userRepository.getUser(userDto.id);
-        //
-        // if(!isExistUser) {
-        //     throw new UnauthorizedException(`User with id ${userDto.id} does not exist`);
-        // }
+        const isExistUser = await this.userRepository.getUser(userDto.id);
+
+        if(!isExistUser) {
+            throw new UnauthorizedException(`User with id ${userDto.id} does not exist`);
+        }
 
         const delUser = {
             ...userDto,
