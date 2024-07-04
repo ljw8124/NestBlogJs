@@ -11,6 +11,7 @@ export class UserService {
     async getAllUser() : Promise<UserDto[]> {
         const userDtoArr = await this.userRepository.getAllUser();
 
+        // 삭제 시 진짜 삭제가 아닌 Enable = false 처리라서 필터처리
         return userDtoArr.filter(userDto => userDto.isEnable);
     }
 
@@ -18,7 +19,7 @@ export class UserService {
         const salt = 10;
         const {id, password} = userDto;
 
-        const isExistUser = await this.userRepository.getUser(id);
+        const isExistUser = await this.getUser(id);
 
         if(isExistUser) {
             throw new ConflictException('already exist user');
@@ -37,7 +38,7 @@ export class UserService {
     }
 
     async updateUser(userId: string, userDto: UserDto) : Promise<void> {
-        const isExistUser = await this.userRepository.getUser(userId);
+        const isExistUser = await this.getUser(userId);
 
         if(!isExistUser) {
             throw new UnauthorizedException(`User with id ${userId} does not exist`);
@@ -52,7 +53,7 @@ export class UserService {
     }
 
     async deleteUser(userId: string, userDto: UserDto) : Promise<void> {
-        const isExistUser = await this.userRepository.getUser(userId);
+        const isExistUser = await this.getUser(userId);
 
         if(!isExistUser) {
             throw new UnauthorizedException(`User with id ${userId} does not exist`);
