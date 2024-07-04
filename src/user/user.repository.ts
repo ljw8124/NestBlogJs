@@ -8,8 +8,8 @@ interface UserRepo {
     getAllUser(): Promise<UserDto[]>;
     createUser(userDto: UserDto): Promise<void>;
     getUser(userId: string): Promise<UserDto>;
-    updateUser(userDto: UserDto): Promise<void>;
-    deleteUser(userDto: UserDto): Promise<void>;
+    updateUser(userId: string, userDto: UserDto): Promise<void>;
+    deleteUser(userId: string, userDto: UserDto): Promise<void>;
 }
 
 @Injectable()
@@ -18,14 +18,15 @@ export class UserRepository implements UserRepo{
     constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
 
     async getAllUser(): Promise<UserDto[]> {
-
-
         return await this.userModel.find().exec();
     }
 
     async getUser(userId: string): Promise<User> {
+        const filter = {
+            id: userId
+        };
 
-        const user = await this.userModel.findOne({ id: userId }).exec();
+        const user = await this.userModel.findOne(filter).exec();
 
         return user!;
     }
@@ -35,15 +36,22 @@ export class UserRepository implements UserRepo{
 
     }
 
-    async updateUser(userDto: UserDto): Promise<void> {
-        await this.userModel.findByIdAndUpdate(userDto.id, userDto);
+    async updateUser(userId: string, userDto: UserDto): Promise<void> {
+        const filter = {
+            id: userId
+        };
+
+        await this.userModel.findOneAndUpdate(filter, userDto);
+
     }
 
     // 삭제 대신 해당 사용자 아이디 사용 못하게 수정
-    async deleteUser(userDto: UserDto): Promise<void> {
-        const userId = userDto.id;
+    async deleteUser(userId: string, userDto: UserDto): Promise<void> {
+        const filter = {
+            id: userId
+        };
 
-        await this.userModel.findByIdAndUpdate(userId, userDto);
+        await this.userModel.findOneAndUpdate(filter, userDto);
     }
 
 }
