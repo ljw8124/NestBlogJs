@@ -10,9 +10,7 @@ export class UserController {
 
     @Get()
     async getAllUser() : Promise<UserDto[]> {
-        const allUsers = await this.userService.getAllUser();
-
-        return allUsers;
+        return await this.userService.getAllUser();
     }
 
     @Post()
@@ -35,13 +33,13 @@ export class UserController {
     async updateUser(@Param('userId') userId: string, @Body() userInfo: UserDto) : Promise<void> {
         console.log(`Update User ${userId}`);
 
-        await this.userService.updateUser(userInfo);
+        await this.userService.updateUser(userId, userInfo);
     }
 
     @Delete('/:userId')
     async deleteUser(@Param('userId') userId: string, @Body() userInfo: UserDto) : Promise<void> {
         console.log(`Delete(Unable) User ${userId}`);
 
-        await this.userService.deleteUser(userInfo);
+        await this.userService.deleteUser(userId, userInfo);
     }
 }
