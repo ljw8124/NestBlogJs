@@ -34,7 +34,7 @@ export class Blog {
     @IsString()
     readonly author: string;
 
-    @Prop()
+    @Prop({ default: new Date() })
     @IsNotEmpty()
     @IsDate()
     readonly createdDt: Date;
