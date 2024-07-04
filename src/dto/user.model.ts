@@ -3,8 +3,8 @@ export interface UserDto {
     id: string,
     password: string,
     name: string,
-    regDate: Date;
-
+    createdDt: Date;
+    upDatedDt?: Date;
     email?: string,
     phoneNum?: string,
 

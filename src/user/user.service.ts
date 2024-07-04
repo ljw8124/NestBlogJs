@@ -46,7 +46,7 @@ export class UserService {
 
         const updateUserDto = {
             ...userDto,
-            updateDate: new Date(),
+            updatedDt: new Date(),
         }
 
         return await this.userRepository.updateUser(userId, updateUserDto);

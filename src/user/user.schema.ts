@@ -26,11 +26,11 @@ export class User {
     @Prop({ default: new Date() })
     @IsDate()
     @IsNotEmpty()
-    readonly regDate: Date;
+    readonly createdDt: Date;
 
     @Prop()
     @IsDate()
-    readonly updateDate: Date;
+    readonly updatedDt: Date;
 
     @Prop()
     @IsEmail()
