@@ -2,7 +2,7 @@
 GET {{server}}/user
 
 ### 유저 조회
-GET {{server}}/user/6670d3350dbcb92a4b8783e4
+GET {{server}}/user/testID
 
 ### 새로운 유저 만들기
 POST {{server}}/user
@@ -17,18 +17,18 @@ Content-Type: application/json
 }
 
 ### 유저정보변경
-PUT {{server}}}/user/userId
+PUT {{server}}/user/testID
 Content-Type: application/json
 
 {
-  "id": "",
-  "password": "",
-  "name": "",
-  "email": "",
-  "phoneNum": ""
+  "id": "updateId",
+  "password": "changePassword",
+  "name": "updateName",
+  "email": "updateEmail",
+  "phoneNum": "010-2222-3333"
 }
 
 ### 유저 삭제(비활성화)
-DELETE {{server}}}/user/userId
+DELETE {{server}}/user/testID
 
 
