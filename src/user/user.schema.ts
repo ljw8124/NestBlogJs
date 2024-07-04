@@ -23,10 +23,14 @@ export class User {
     @IsNotEmpty()
     readonly name: string;
 
-    @Prop()
+    @Prop({ default: new Date() })
     @IsDate()
     @IsNotEmpty()
     readonly regDate: Date;
+
+    @Prop()
+    @IsDate()
+    readonly updateDate: Date;
 
     @Prop()
     @IsEmail()
@@ -36,7 +40,7 @@ export class User {
     @IsPhoneNumber()
     readonly phoneNum: string;
 
-    @Prop()
+    @Prop({ default: true})
     @IsBoolean()
     readonly isEnable: boolean;
 

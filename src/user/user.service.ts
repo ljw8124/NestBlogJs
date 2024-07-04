@@ -9,7 +9,9 @@ export class UserService {
     constructor(private userRepository: UserRepository) {}
 
     async getAllUser() : Promise<UserDto[]> {
-        return await this.userRepository.getAllUser();
+        const userDtoArr = await this.userRepository.getAllUser();
+
+        return userDtoArr.filter(userDto => userDto.isEnable);
     }
 
     async createUser(userDto: UserDto) : Promise<void> {
@@ -24,9 +26,7 @@ export class UserService {
 
         const newUser: UserDto = {
             ...userDto,
-            password: await bcrypt.hash(password, salt),
-            regDate: new Date(),
-            isEnable: true
+            password: await bcrypt.hash(password, salt)
         }
 
         return await this.userRepository.createUser(newUser);
@@ -36,28 +36,34 @@ export class UserService {
         return await this.userRepository.getUser(userId);
     }
 
-    async updateUser(userDto: UserDto) : Promise<void> {
-        const isExistUser = await this.userRepository.getUser(userDto.id);
+    async updateUser(userId: string, userDto: UserDto) : Promise<void> {
+        const isExistUser = await this.userRepository.getUser(userId);
 
         if(!isExistUser) {
-            throw new UnauthorizedException(`User with id ${userDto.id} does not exist`);
+            throw new UnauthorizedException(`User with id ${userId} does not exist`);
         }
 
-        return await this.userRepository.updateUser(userDto);
+        const updateUserDto = {
+            ...userDto,
+            updateDate: new Date(),
+        }
+
+        return await this.userRepository.updateUser(userId, updateUserDto);
     }
 
-    async deleteUser(userDto: UserDto) : Promise<void> {
-        const isExistUser = await this.userRepository.getUser(userDto.id);
+    async deleteUser(userId: string, userDto: UserDto) : Promise<void> {
+        const isExistUser = await this.userRepository.getUser(userId);
 
         if(!isExistUser) {
-            throw new UnauthorizedException(`User with id ${userDto.id} does not exist`);
+            throw new UnauthorizedException(`User with id ${userId} does not exist`);
         }
 
-        const delUser = {
+        const delUserDto = {
             ...userDto,
             isEnable: false
         }
-        return await this.userRepository.deleteUser(delUser);
+
+        return await this.userRepository.deleteUser(userId, delUserDto);
     }
 
 }
