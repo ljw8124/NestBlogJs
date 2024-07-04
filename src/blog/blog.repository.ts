@@ -12,9 +12,9 @@ import {Injectable, NotFoundException} from "@nestjs/common";
 export interface BlogRepo {
     getAllPost(): Promise<PostDto[]>;
     createPost(postDto: PostDto): Promise<void>;
-    getPost(postId: String): Promise<PostDto>;
-    deletePost(postId: String): Promise<void>;
-    updatePost(postId: String, postDto: PostDto): Promise<void>;
+    getPost(postNo: String): Promise<PostDto>;
+    deletePost(postNo: String): Promise<void>;
+    updatePost(postNo: String, postDto: PostDto): Promise<void>;
 }
 
 // 몽고디비용 리포지토리
@@ -30,29 +30,27 @@ export class BlogRepository implements BlogRepo {
     }
 
     async createPost(postDto: PostDto): Promise<void> {
-
         await this.blogModel.create(postDto);
     }
 
-    async getPost(postId: string): Promise<Blog> {
-        const post = await this.blogModel.findById(postId).exec();
+    async getPost(postNo: string): Promise<Blog> {
+        const filterOption = { postNo: postNo };
+        const post = await this.blogModel.findOne(filterOption).exec();
 
-        if(!post) {
-            throw new NotFoundException(`Post ${postId} is not found}`);
-        }
-
-        return post;
+        return post!;
     }
 
-    async deletePost(postId: string) {
+    async deletePost(postNo: string) {
+        const filterOption = { postNo: postNo };
 
-        await this.blogModel.findByIdAndDelete(postId);
+        await this.blogModel.findOneAndDelete(filterOption);
 
     }
 
-    async updatePost(postId: string, postDto: PostDto) {
+    async updatePost(postNo: string, postDto: PostDto) {
+        const filterOption = { postNo: postNo };
 
-        await this.blogModel.findByIdAndUpdate(postId, postDto);
+        await this.blogModel.findOneAndUpdate(filterOption, postDto);
     }
 
 }

@@ -1,7 +1,7 @@
 import {PostDto} from '../dto/blog.model'; // 게시글의 타입정보 임포트
-import {Injectable} from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 
-// service 는 중간 매개 역할만 하게됨
+// service 는 중간 매개 및 데이터 가공을 하게됨
 // 리포지토리 임포트
 import {BlogRepository} from "./blog.repository";
 
@@ -18,14 +18,12 @@ export class BlogService {
 
     // 게시글 작성
     async createPost(postDto: PostDto) {
-
         const posts = await this.blogRepository.getAllPost();
         const prevPostNo = posts.length > 0 ? posts[posts.length - 1].postNo : 0;
 
         const createPost = {
             ...postDto,
             postNo: prevPostNo + 1,
-            createdDt: new Date(),
             updatedDt: new Date(),
         };
 
@@ -33,21 +31,31 @@ export class BlogService {
 
     }
 
-    async getPost(postId: string) {
+    async getPost(postNo: string) {
 
-        return await this.blogRepository.getPost(postId);
+        return await this.blogRepository.getPost(postNo);
     }
 
-    async delete(postId: string): Promise<void> {
+    async delete(postNo: string): Promise<void> {
+        await this.isValidPost(postNo);
 
-        await this.blogRepository.deletePost(postId);
+        await this.blogRepository.deletePost(postNo);
     }
 
-    async updatePost(postId: string, postDto: PostDto): Promise<void> {
+    async updatePost(postNo: string, postDto: PostDto): Promise<void> {
+        await this.isValidPost(postNo);
 
         const updatePost = { ...postDto, updatedDt: new Date() };
 
-        await this.blogRepository.updatePost(postId, updatePost);
+        await this.blogRepository.updatePost(postNo, updatePost);
+    }
+
+    async isValidPost(postNo: string): Promise<void> {
+        const post = await this.getPost(postNo);
+
+        if(!post) {
+            throw new UnauthorizedException(`Post ${postNo} does not exist`);
+        }
     }
 
 
