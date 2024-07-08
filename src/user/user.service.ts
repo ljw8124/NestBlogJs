@@ -12,7 +12,7 @@ export class UserService {
         const userDtoArr = await this.userRepository.getAllUser();
 
         // 삭제 시 진짜 삭제가 아닌 Enable = false 처리라서 필터처리
-        return userDtoArr.filter(userDto => userDto.isEnable);
+        return userDtoArr.filter(userDto => userDto.isEnable === 'Y');
     }
 
     async createUser(userDto: UserDto) : Promise<void> {
@@ -51,9 +51,9 @@ export class UserService {
     async deleteUser(userId: string, userDto: UserDto) : Promise<void> {
         await this.isValidUser(userId);
 
-        const delUserDto = {
+        const delUserDto: UserDto = {
             ...userDto,
-            isEnable: false
+            isEnable: "N"
         }
 
         return await this.userRepository.deleteUser(userId, delUserDto);
@@ -65,7 +65,9 @@ export class UserService {
         if(!user) {
             throw new UnauthorizedException(`${userId} does not exist`);
         }
+    }
 
+    async login(userId: string, password: string) : Promise<void> {
 
     }
 

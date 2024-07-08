@@ -23,7 +23,8 @@ export class UserRepository implements UserRepo{
 
     async getUser(userId: string): Promise<User> {
         const filter = {
-            id: userId
+            id: userId,
+            isEnable: 'Y'
         };
 
         const user = await this.userModel.findOne(filter).exec();
@@ -52,6 +53,16 @@ export class UserRepository implements UserRepo{
         };
 
         await this.userModel.findOneAndUpdate(filter, userDto);
+    }
+
+    async doLogin(userId: string, password: string): Promise<void> {
+        const filter = {
+            id: userId,
+            password: password,
+            isEnable: 'Y'
+        };
+
+        await this.userModel.findOne()
     }
 
 }

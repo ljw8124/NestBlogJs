@@ -40,9 +40,8 @@ export class User {
     @IsPhoneNumber()
     readonly phoneNum: string;
 
-    @Prop({ default: true})
-    @IsBoolean()
-    readonly isEnable: boolean;
+    @Prop({ default: "Y"})
+    readonly isEnable: "Y" | "N";
 
 }
 

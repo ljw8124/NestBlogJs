@@ -8,6 +8,6 @@ export interface UserDto {
     email?: string,
     phoneNum?: string,
 
-    isEnable: boolean
+    isEnable: "Y" | "N"
 
 }
