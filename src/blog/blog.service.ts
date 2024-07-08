@@ -36,18 +36,18 @@ export class BlogService {
         return await this.blogRepository.getPost(postNo);
     }
 
-    async delete(postNo: string): Promise<void> {
-        await this.isValidPost(postNo);
-
-        await this.blogRepository.deletePost(postNo);
-    }
-
     async updatePost(postNo: string, postDto: PostDto): Promise<void> {
         await this.isValidPost(postNo);
 
         const updatePost = { ...postDto, updatedDt: new Date() };
 
         await this.blogRepository.updatePost(postNo, updatePost);
+    }
+
+    async delete(postNo: string): Promise<void> {
+        await this.isValidPost(postNo);
+
+        await this.blogRepository.deletePost(postNo);
     }
 
     async isValidPost(postNo: string): Promise<void> {

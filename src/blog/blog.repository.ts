@@ -40,17 +40,17 @@ export class BlogRepository implements BlogRepo {
         return post!;
     }
 
+    async updatePost(postNo: string, postDto: PostDto) {
+        const filterOption = { postNo: postNo };
+
+        await this.blogModel.findOneAndUpdate(filterOption, postDto);
+    }
+
     async deletePost(postNo: string) {
         const filterOption = { postNo: postNo };
 
         await this.blogModel.findOneAndDelete(filterOption);
 
-    }
-
-    async updatePost(postNo: string, postDto: PostDto) {
-        const filterOption = { postNo: postNo };
-
-        await this.blogModel.findOneAndUpdate(filterOption, postDto);
     }
 
 }
