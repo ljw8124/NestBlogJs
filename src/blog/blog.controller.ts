@@ -48,7 +48,7 @@ export class BlogController {
 
     @Delete('/:postNo')
     async deletePost(@Param('postNo') postNo: string) {
-        await this.blogService.delete(postNo);
+        await this.blogService.deletePost(postNo);
 
         return 'success';
     }

@@ -44,7 +44,7 @@ export class BlogService {
         await this.blogRepository.updatePost(postNo, updatePost);
     }
 
-    async delete(postNo: string): Promise<void> {
+    async deletePost(postNo: string): Promise<void> {
         await this.isValidPost(postNo);
 
         await this.blogRepository.deletePost(postNo);
