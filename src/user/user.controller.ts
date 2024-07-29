@@ -42,4 +42,13 @@ export class UserController {
 
         await this.userService.deleteUser(userId, userInfo);
     }
+
+    @Post('/login')
+    async doLogin(@Body() userId: string, password: string ) : Promise<Object> {
+        const loginResult = await this.userService.doLogin(userId, password);
+
+        console.log(loginResult);
+
+        return loginResult;
+    }
 }

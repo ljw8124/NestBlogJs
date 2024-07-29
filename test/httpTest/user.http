@@ -2,7 +2,7 @@
 GET {{server}}/user
 
 ### 유저 조회
-GET {{server}}/user/testID
+GET {{server}}/user/updateId
 
 ### 새로운 유저 만들기
 POST {{server}}/user
@@ -29,6 +29,6 @@ Content-Type: application/json
 }
 
 ### 유저 삭제(비활성화)
-DELETE {{server}}/user/testID
+DELETE {{server}}/user/updateId
 
 

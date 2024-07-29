@@ -10,6 +10,7 @@ interface UserRepo {
     getUser(userId: string): Promise<UserDto>;
     updateUser(userId: string, userDto: UserDto): Promise<void>;
     deleteUser(userId: string, userDto: UserDto): Promise<void>;
+    doLogin(userId: string, password: string): Promise<UserDto>;
 }
 
 @Injectable()
@@ -55,14 +56,16 @@ export class UserRepository implements UserRepo{
         await this.userModel.findOneAndUpdate(filter, userDto);
     }
 
-    async doLogin(userId: string, password: string): Promise<void> {
+    async doLogin(userId: string, password: string): Promise<User> {
         const filter = {
             id: userId,
             password: password,
             isEnable: 'Y'
         };
 
-        await this.userModel.findOne()
+        const loginUser = await this.userModel.findOne(filter).exec();
+
+        return loginUser!;
     }
 
 }

@@ -67,8 +67,26 @@ export class UserService {
         }
     }
 
-    async login(userId: string, password: string) : Promise<void> {
+    async doLogin(userId: string, password: string) : Promise<object> {
+        const salt = 10;
 
+        const loginUser = await this.userRepository.doLogin(userId, password);
+
+
+
+        const loginResult = loginUser ?
+          {
+              result: 'SUCCESS',
+              id: loginUser.id,
+              name: loginUser.name,
+              email: loginUser.email,
+              phoneNum: loginUser.phoneNum
+          } :
+          {
+              result: 'FAILURE'
+          };
+
+        return loginResult;
     }
 
 }
