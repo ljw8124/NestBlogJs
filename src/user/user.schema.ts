@@ -40,7 +40,7 @@ export class User {
     @IsPhoneNumber()
     readonly phoneNum: string;
 
-    @Prop({ default: "Y"})
+    @Prop({ default: "Y" })
     readonly isEnable: "Y" | "N";
 
 }

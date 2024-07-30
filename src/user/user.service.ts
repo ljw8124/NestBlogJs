@@ -72,8 +72,6 @@ export class UserService {
 
         const loginUser = await this.userRepository.doLogin(userId, password);
 
-
-
         const loginResult = loginUser ?
           {
               result: 'SUCCESS',
