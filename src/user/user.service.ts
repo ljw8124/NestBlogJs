@@ -6,6 +6,8 @@ import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class UserService {
+    PASSWORD_SALT = 10;
+
     constructor(private userRepository: UserRepository) {}
 
     async getAllUser() : Promise<UserDto[]> {
@@ -16,7 +18,6 @@ export class UserService {
     }
 
     async createUser(userDto: UserDto) : Promise<void> {
-        const salt = 10;
         const {id, password} = userDto;
 
         const user = await this.getUser(id);
@@ -27,7 +28,7 @@ export class UserService {
 
         const newUser: UserDto = {
             ...userDto,
-            password: await bcrypt.hash(password, salt)
+            password: await bcrypt.hash(password, this.PASSWORD_SALT)
         }
 
         return await this.userRepository.createUser(newUser);
@@ -68,8 +69,6 @@ export class UserService {
     }
 
     async doLogin(userId: string, password: string) : Promise<object> {
-        const salt = 10;
-
         const loginUser = await this.userRepository.doLogin(userId, password);
 
         const loginResult = loginUser ?
