@@ -30,7 +30,7 @@ const DB_ADDRESS = `mongodb://${config.db.host}:${config.db.port}/${config.db.na
   providers: [
       BlogService, BlogRepository,
       UserService, UserRepository,
-      AuthService,
+      // AuthService,
   ],
 })
 export class AppModule {}
