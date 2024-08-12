@@ -69,15 +69,18 @@ export class UserService {
     }
 
     async doLogin(userId: string, password: string) : Promise<object> {
-        const loginUser = await this.userRepository.doLogin(userId, password);
 
-        const loginResult = loginUser ?
+        const user = await this.getUser(userId);
+
+        const validPassword = await bcrypt.compare(password, user.password);
+
+        const loginResult = validPassword ?
           {
               result: 'SUCCESS',
-              id: loginUser.id,
-              name: loginUser.name,
-              email: loginUser.email,
-              phoneNum: loginUser.phoneNum
+              id: user.id,
+              name: user.name,
+              email: user.email,
+              phoneNum: user.phoneNum
           } :
           {
               result: 'FAILURE'
