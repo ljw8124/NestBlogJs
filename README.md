@@ -2,6 +2,9 @@
 
 현재 MongoDB Docker 에 들어있음
 ```shell
+# MongoDB 도커에 설치
+docker pull mongo # 따로 버전 안쓰면 latest
+
  # 컨테이너 실행
  docker start [Container명]
  
