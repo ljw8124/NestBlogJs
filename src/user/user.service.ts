@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class UserService {
-    PASSWORD_SALT = 10;
+    private PASSWORD_SALT = 10;
 
     constructor(private userRepository: UserRepository) {}
 
